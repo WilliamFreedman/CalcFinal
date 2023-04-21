@@ -1,28 +1,14 @@
 from sympy import symbols, simplify, Symbol
 
 from sympy import sqrt as sym_sqrt
-from sympy.vector import CoordSys3D, cross
-import numpy as np
-from math import sqrt
+from sympy.vector import CoordSys3D
 
-
-def cross_product(a,b):
-    ax, ay, az, bx, by, bz = symbols(" ".join(a+b))
-    a2 = np.array([ax,ay,az])
-    b2 = np.array([bx,by,bz])
-    return np.cross(a2,b2)
+zero = Symbol("0")
 
 def cp(a,b):
     N = CoordSys3D('N')
-    ax = Symbol("(" + a[0] + ")")
-    ay = Symbol("(" + a[1] + ")")
-    az = Symbol("(" + a[2] + ")")
-    bx = Symbol("(" + b[0] + ")")
-    by = Symbol("(" + b[1] + ")")
-    bz = Symbol("(" + b[2] + ")")
-
-    v1 = ax * N.i + ay * N.j + az * N.k
-    v2 = bx * N.i + by * N.j + bz * N.k
+    v1 = a[0] * N.i + a[1] * N.j + a[2] * N.k
+    v2 = b[0] * N.i + b[1] * N.j + b[2] * N.k
 
     return v1.cross(v2)
 
@@ -36,10 +22,26 @@ def magnitude(v):
     vz = final[2] ** 2
     return simplify(sym_sqrt(vx+vy+vz))
 
+#create a variable for each thing you want to exist as an individual entity.
+#if you want ax to be a times x, count them seperately, if you want ax to be its on indivisible thing, keep it as one
+#you can name variables anything you want, but for ease of use i'd just name them whatever symbol they hold
+#the only restricted symbol is "0" and variable name is zero
+#example
+ax = Symbol("ax")
+bx = Symbol("bx")
+ay = Symbol("ay")
+by = Symbol("by")
+az = Symbol("az")
+bz = Symbol("bz")
 
-#put the things you want to compute the cross product/magnitude of here. No spaces.
-a = ["ax-y","ab+c","ax-q"]
-b = ["ax+4","ax+6","ax-1"]
+t = Symbol("t")
+
+#put the things you want to compute the cross product/magnitude of here.
+# a and b are the two vectors you're taking the cross product of, with components entered in x y z order
+#to multiply its *, power is **
+#Example
+a = [ax,ay,az]
+b = [bx,bx,bz]
 
 c = cp(a,b)
 
